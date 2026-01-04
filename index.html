@@ -113,8 +113,8 @@ Présentation du projet :
                 </div>
             </div>
             <!-- Circuit Diagram Section -->
-<div class="rounded-xl overflow-hidden mt-8">
-<button class="circuit-toggle w-full flex justify-between items-center p-6 bg-black/50 border border-yellow-500 rounded-t-xl hover:shadow-lg hover:shadow-yellow-500/20 transition-all duration-300">
+            <div class="rounded-xl overflow-hidden mt-8">
+            <button class="circuit-toggle w-full flex justify-between items-center p-6 bg-black/50 border border-yellow-500 rounded-t-xl hover:shadow-lg hover:shadow-yellow-500/20 transition-all duration-300">
                     <h2 class="text-2xl font-bold text-yellow-400">Schéma Électrique et Connexions</h2>
                     <i data-feather="chevron-down" class="text-yellow-400 transition-transform duration-300"></i>
                 </button>
@@ -169,12 +169,260 @@ Présentation du projet :
                         <p class="text-sm text-yellow-400/80 italic mt-4">
                             Le respect du code couleurs facilite le dépannage et évite les erreurs de court-circuit.
                         </p>
+                        </div>
                     </div>
-</div>
+                </div>
+                <div class="mt-7 mb-15">
+    <button class="w-full flex items-center justify-between px-6 py-5 bg-gray-900 border-2 border-purple-500 rounded-lg text-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all hover:shadow-[0_0_25px_rgba(168,85,247,0.6)]" 
+            onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span class="text-xl font-bold tracking-widest uppercase"> Code Source & Algorithme</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+    
+    <div class="hidden p-6 bg-black border-x-2 border-b-2 border-purple-900 rounded-b-lg space-y-8">
+        
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <h4 class="text-purple-400 font-semibold flex items-center gap-2">
+                    <span>💻 Code Arduino (C++)</span>
+                </h4>
+                <button onclick="copyToClipboard('arduinoCode')" class="text-xs bg-purple-900/50 hover:bg-purple-600 text-purple-200 px-3 py-1 rounded border border-purple-500 transition-colors">
+                    Copier le code
+                </button>
+            </div>
+            <pre id="arduinoCode" class="bg-gray-950 p-4 rounded border border-purple-800/50 text-sm overflow-x-auto text-green-400 font-mono">
+#include <Servo.h>
+Servo myServo;
+
+const int trigPin = 7;
+const int echoPin = 6;
+const int buzzerPin = 8;
+const int red1 = 12, red2 = 11, green1 = 5, green2 = 4;
+
+// NEW TIMING LOGIC
+unsigned long activeElapsed = 0;   // This only grows when moving
+unsigned long lastUpdate = 0;      // Tracks the last time the loop ran
+const int sweepDuration = 2100; 
+const int edgePause = 200; 
+
+bool movingCCW = true;
+bool isPaused = false;
+int virtualAngle = 0;
+
+void setup() {
+  myServo.attach(9);
+  pinMode(trigPin, OUTPUT); pinMode(echoPin, INPUT);
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(red1, OUTPUT); pinMode(red2, OUTPUT);
+  pinMode(green1, OUTPUT); pinMode(green2, OUTPUT);
+  
+  Serial.begin(9600);
+  lastUpdate = millis(); // Initialize the tracker
+}
+
+void loop() {
+  unsigned long currentTime = millis();
+  unsigned long deltaTime = currentTime - lastUpdate; // How much time passed since last loop
+  lastUpdate = currentTime;
+
+  long duration;
+  int distance;
+  digitalWrite(trigPin, LOW); delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH); delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = duration * 0.034 / 2;
+
+  // 1. OBJECT DETECTED (Alarm Mode)
+  if (distance > 0 && distance < 0) {
+    myServo.write(90); 
+    digitalWrite(green1, LOW); digitalWrite(green2, LOW);
+    digitalWrite(red1, HIGH); digitalWrite(red2, HIGH);
+    tone(buzzerPin, 1000);
+    
+    // We DO NOT add deltaTime to activeElapsed here. 
+    // The "clock" stays frozen.
+    sendData(virtualAngle, distance);
+  } 
+  // 2. SCANNING MODE (Moving)
+  else {
+    noTone(buzzerPin);
+    digitalWrite(red1, LOW); digitalWrite(red2, LOW);
+    digitalWrite(green1, HIGH); digitalWrite(green2, HIGH);
+
+    activeElapsed += deltaTime; // The clock only moves when no object is detected
+
+    if (!isPaused) {
+      if (activeElapsed >= sweepDuration) {
+        isPaused = true;
+        activeElapsed = 0; // Reset for the pause phase
+      } else {
+        if (movingCCW) {
+          myServo.write(100);
+          virtualAngle = map(activeElapsed, 0, sweepDuration, 0, 180);
+        } else {
+          myServo.write(83);
+          virtualAngle = map(activeElapsed, 0, sweepDuration, 180, 0);
+        }
+      }
+    } else {
+      // Logic for the 200ms Edge Pause
+      myServo.write(90); 
+      if (activeElapsed >= edgePause) {
+        isPaused = false;
+        movingCCW = !movingCCW; 
+        activeElapsed = 0; // Reset for the next sweep trip
+      }
+    }
+    sendData(virtualAngle, distance);
+  }
+  delay(20); 
+}
+
+void sendData(int angle, int dist) {
+  Serial.print(angle);
+  Serial.print(",");
+  Serial.print(dist);
+  Serial.print("."); 
+}
+</pre>
+        </div>
+
+        <hr class="border-purple-900/30">
+
+        <div class="space-y-3">
+            <div class="flex items-center justify-between">
+                <h4 class="text-purple-400 font-semibold flex items-center gap-2">
+                    <span>🖥️ Code Processing (Java)</span>
+                </h4>
+                <button onclick="copyToClipboard('processingCode')" class="text-xs bg-blue-900/50 hover:bg-blue-600 text-blue-200 px-3 py-1 rounded border border-blue-500 transition-colors">
+                    Copier le code
+                </button>
+            </div>
+            <pre id="processingCode" class="bg-gray-950 p-4 rounded border border-purple-800/50 text-sm overflow-x-auto text-blue-400 font-mono">
+import processing.serial.*;
+
+Serial myPort;
+String data = "";
+int angle, distance;
+float pixDist;
+
+void setup() {
+  size(1200, 700); 
+  smooth();
+  // IMPORTANT: Ensure COM port matches your Arduino IDE
+  myPort = new Serial(this, "COM4", 9600); 
+  myPort.bufferUntil('.'); 
+  background(0);
+}
+
+void draw() {
+  fill(0, 15); // Trail effect
+  noStroke();
+  rect(0, 0, width, height);
+  
+  drawRadar();
+  drawLine();
+  drawObject();
+  drawText(); // Added labels
+}
+
+void serialEvent(Serial myPort) {
+  data = myPort.readStringUntil('.');
+  if (data != null) {
+    data = data.substring(0, data.length()-1);
+    String[] list = split(data, ',');
+    if (list.length == 2) {
+      int rawAngle = int(list[0]);
+      distance = int(list[1]);
+      
+      // FLIP LOGIC: 
+      // If 0 shows as 180 and 180 shows as 0, this line fixes it:
+      angle = 180 - rawAngle; 
+    }
+  }
+}
+
+void drawRadar() {
+  pushMatrix();
+  translate(width/2, height - height/10); 
+  noFill();
+  strokeWeight(2);
+  stroke(98, 245, 31);
+  
+  // Distance Circles
+  arc(0, 0, (width-width/6), (width-width/6), PI, TWO_PI);
+  arc(0, 0, (width-width/3), (width-width/3), PI, TWO_PI);
+  arc(0, 0, (width-width/1.5), (width-width/1.5), PI, TWO_PI);
+  
+  line(-width/2, 0, width/2, 0);
+  popMatrix();
+}
+
+void drawText() {
+  pushMatrix();
+  translate(width/2, height - height/10);
+  fill(98, 245, 31);
+  textSize(18);
+  text("5cm", width/10, 0);
+  text("10cm", width/5, 0);
+  text("15cm", width/3.5, 0);
+  text("20cm", width/2.5, 0);
+  
+  fill(255);
+  text("Angle: " + angle + "°", -width/2 + 50, 50);
+  text("Distance: " + (distance < 40 ? distance + " cm" : "Out of Range"), width/2 - 200, 50);
+  popMatrix();
+}
+
+void drawLine() {
+  pushMatrix();
+  strokeWeight(9);
+  stroke(30, 250, 60); 
+  translate(width/2, height - height/10);
+  line(0, 0, (height-height/10)*cos(radians(angle+180)), (height-height/10)*sin(radians(angle+180)));
+  popMatrix();
+}
+
+void drawObject() {
+  pushMatrix();
+  translate(width/2, height - height/10);
+  strokeWeight(10);
+  stroke(255, 10, 10); 
+  pixDist = distance * ((height-height/10)*0.035); // Adjusted scale
+  
+  if (distance < 25 && distance > 0) {
+    line(pixDist*cos(radians(angle+180)), pixDist*sin(radians(angle+180)), 
+         (height-height/10)*cos(radians(angle+180)), (height-height/10)*sin(radians(angle+180)));
+  }
+  popMatrix();
+}
+</pre>
+        </div>
     </div>
 </div>
+
+<script>
+function copyToClipboard(id) {
+    const text = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert("Code copié !");
+    });
+}
+</script>
+            </div>
+        </div>
+
+    </pre>
+            </div>
+        </div>
     </div>
 </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script src="script.js"></script>
     <script>feather.replace();</script>
