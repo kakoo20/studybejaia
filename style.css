@@ -115,18 +115,19 @@ body {
 .coming-soon {
     text-shadow: 0 0 15px rgba(34, 211, 238, 0.7);
 }
-.intro-content {
+.intro-content, .hardware-content, .circuit-content {
     transition: max-height 0.5s ease-out, opacity 0.5s ease;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
     white-space: pre-line;
+    margin-bottom: 1.5rem;
 }
-
-.intro-content:not(.hidden) {
+.intro-content:not(.hidden), .hardware-content:not(.hidden), .circuit-content:not(.hidden) {
     opacity: 1;
     max-height: 2000px;
     white-space: pre-line;
+    margin-bottom: 1.5rem;
 }
 img {
     animation: float 3s ease-in-out infinite;
@@ -156,8 +157,36 @@ img {
 .border-white\/30 {
     border-color: rgba(255, 255, 255, 0.3);
 }
+.image-container img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.image-container img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
+}
+.color-guide ul li {
+    transition: all 0.3s ease;
+    padding: 0.05rem 0.2rem;
+    border-radius: 0.2rem;
+    background: rgba(0, 0, 0, 0.2);
+    margin: 0.02rem 0;
+}
+
+.color-guide ul li:hover {
+    background: rgba(234, 179, 8, 0.1);
+    transform: translateX(2px);
+}
+/* Fullscreen image transition */
+#circuit-image {
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+#fullscreen-toggle {
+    pointer-events: auto;
+    z-index: 60;
+}
 @media (max-width: 768px) {
-    .blob {
+.blob {
         width: 300px;
         height: 300px;
         filter: blur(80px);

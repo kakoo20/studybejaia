@@ -42,7 +42,7 @@
                 </button>
                 <div class="intro-content hidden bg-black/30 p-6 border border-t-0 border-cyan-500/50 rounded-b-xl">
                     <p class="text-lg leading-relaxed">
-                        Présentation du projet :
+Présentation du projet :
                         Le projet "Mini Radar" est un système de détection compact conçu pour repérer et cartographier des objets en temps réel. En utilisant des ondes ultrasonores, le système scanne une zone précise et analyse l'écho pour calculer la distance et la position des obstacles. Ces données sont ensuite affichées sur une interface graphique pour imiter le fonctionnement d'un radar industriel.
 
                         Pourquoi ce projet ? 
@@ -59,7 +59,122 @@
                     </p>
                 </div>
             </div>
-        </div>
+
+            <!-- Hardware Section -->
+            <div class="rounded-xl overflow-hidden">
+                <button class="hardware-toggle w-full flex justify-between items-center p-6 bg-black/50 border border-green-500 rounded-t-xl hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300">
+                    <h2 class="text-2xl font-bold text-green-400">Matériel & Composants</h2>
+                    <i data-feather="chevron-down" class="text-green-400 transition-transform duration-300"></i>
+                </button>
+                <div class="hardware-content hidden bg-black/30 p-6 border border-t-0 border-green-500/50 rounded-b-xl space-y-4">
+                    <h3 class="text-xl font-semibold text-green-300">Liste des composants :</h3>
+                    <ul class="list-disc pl-6 space-y-2">
+                        <li>Arduino Uno (Microcontrôleur)</li>
+                        <li>Capteur Ultrason HC-SR04 (Détection)</li>
+                        <li>Servomoteur MG90s (Rotation 360°)</li>
+                        <li>Fils de connexion male-male & male-femelle </li>
+                        <li>Breadboard</li>
+                        <li>LEDs vertes et rouges</li>
+                        <li>Buzzer actif</li>
+                        <li>Resistances 220 Ohm</li>
+
+                    </ul>
+                    <hr class="border-t border-green-500/30 my-6">
+                    
+                    <h3 class="text-xl font-semibold text-green-300 flex items-center gap-2">
+                        <i data-feather="cpu" class="w-5 h-5"></i>
+                        Logiciels utilisés
+                    </h3>
+                    <ul class="list-disc pl-6 space-y-2 mt-2">
+                        <li><span class="font-medium">Arduino IDE</span> : Environnement utilisé pour écrire et téléverser le code de contrôle du système.</li>
+                        <li><span class="font-medium">Processing 4</span> : Logiciel utilisé pour créer l'<span class="text-green-300 font-medium">Interface Graphique</span> et visualiser les ondes du radar en temps réel.</li>
+                        <li><span class="font-medium">Visual Studio Code</span> : Éditeur utilisé pour le développement et la gestion du site web du projet.</li>
+                         <li><span class="font-medium">Tinkercad</span> : Logiciel utilisé pour dessiner le schéma du circuit électronique.</li>
+                    </ul>
+
+                    <h3 class="text-xl font-semibold text-green-300 mt-6">Spécifications techniques :</h3>
+                    <div class="overflow-x-auto">
+<table class="min-w-full border border-green-500/30">
+                            <tbody>
+                                <tr class="border-b border-green-500/30">
+                                    <td class="px-4 py-2 font-medium">Portée</td>
+                                    <td class="px-4 py-2">2cm - 30cm</td>
+                                </tr>
+                                <tr class="border-b border-green-500/30">
+                                    <td class="px-4 py-2 font-medium">Tension</td>
+                                    <td class="px-4 py-2">5V</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 font-medium">Angle de balayage</td>
+                                    <td class="px-4 py-2">180°</td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- Circuit Diagram Section -->
+<div class="rounded-xl overflow-hidden mt-8">
+<button class="circuit-toggle w-full flex justify-between items-center p-6 bg-black/50 border border-yellow-500 rounded-t-xl hover:shadow-lg hover:shadow-yellow-500/20 transition-all duration-300">
+                    <h2 class="text-2xl font-bold text-yellow-400">Schéma Électrique et Connexions</h2>
+                    <i data-feather="chevron-down" class="text-yellow-400 transition-transform duration-300"></i>
+                </button>
+                <div class="circuit-content hidden bg-black/30 p-6 border border-t-0 border-yellow-500/50 rounded-b-xl space-y-4">
+                    <p class="text-lg leading-relaxed text-yellow-300">
+                        Schéma détaillé montrant les connexions entre l'Arduino, le capteur, le servomoteur et le buzzer.
+                    </p>
+                    <div class="image-container flex flex-col items-center mt-6 relative">
+                        <img src="https://huggingface.co/spaces/kako20/neon-glow-blobscape-explorer/resolve/main/images/Magnificent%20Gogo.png" 
+                             alt="Circuit Diagram" 
+                             id="circuit-image"
+                             class="rounded-lg border-2 border-yellow-500 shadow-lg shadow-yellow-500/30 max-w-full h-auto">
+                        <button id="fullscreen-toggle" class="mt-2 px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-400 transition-colors">
+                            <i data-feather="maximize-2" class="w-4 h-4"></i> View Fullscreen
+                        </button>
+                    </div>
+                    <div class="color-guide mt-8 space-y-4">
+                        <h3 class="text-xl font-semibold text-yellow-300 flex items-center gap-2">
+                            <i data-feather="help-circle" class="w-5 h-5"></i>
+                            Guide des Couleurs
+                        </h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 hovered-element">
+                                <span class="w-4 h-4 rounded-full bg-red-600 shadow-lg shadow-red-500/50"></span>
+                                <span class="hovered-element">Fils Rouges : Alimentation positive (5V)</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                            <span class="w-4 h-4 rounded-full bg-black border border-gray-600 shadow-lg shadow-gray-500/50"></span>
+                            <span>Fils Noirs : Masse (GND) pour fermer le circuit</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                            <span class="w-4 h-4 rounded-full bg-blue-400 shadow-lg shadow-blue-500/50"></span>
+                            <span>Fil Bleu : Signal ECHO </span>
+                            </li>
+                             <li class="flex items-center gap-3">
+                            <span class="w-4 h-4 rounded-full bg-amber-800 shadow-lg shadow-amber-800/50"></span>
+                            <span>Fil Marron : Signal TRIG </span>
+                            </li>
+                            <li class="flex items-center gap-3 hovered-element">
+                            <span class="w-4 h-4 rounded-full bg-yellow-400 shadow-lg shadow-yellow-400/50"></span>
+                            <span class="hovered-element">Fil Jaune : Signal Buzzer</span>
+                            </li>
+                            <li class="flex items-center gap-3 hovered-element">
+                            <span class="w-4 h-4 rounded-full bg-green-500 shadow-lg shadow-green-500/50"></span>
+                            <span class="hovered-element">Fils Verts : Signal LED</span>
+                            </li>
+                           <li class="flex items-center gap-3 hovered-element">
+                           <span class="w-4 h-4 rounded-full bg-purple-600 shadow-lg shadow-purple-600/50"></span>
+                           <span class="hovered-element">Fil Violet : Signal Servo Moteur</span>
+                           </li>
+                        </ul>
+                        <p class="text-sm text-yellow-400/80 italic mt-4">
+                            Le respect du code couleurs facilite le dépannage et évite les erreurs de court-circuit.
+                        </p>
+                    </div>
+</div>
+    </div>
+</div>
+    </div>
+</div>
 </div>
 <script src="script.js"></script>
     <script>feather.replace();</script>

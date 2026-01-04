@@ -1,6 +1,8 @@
 
-document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
+document.addEventListener('DOMContentLoaded', async () => {
+    // Load feather icons
+    await feather.replace();
+const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
     const body = document.body;
     
@@ -45,10 +47,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.addEventListener('resize', initBlobs);
     initBlobs();
+    // Fullscreen image toggle
+    const fullscreenToggle = document.getElementById('fullscreen-toggle');
+    const circuitImage = document.getElementById('circuit-image');
+    let isFullscreen = false;
+
+    fullscreenToggle.addEventListener('click', () => {
+        isFullscreen = !isFullscreen;
+        if (isFullscreen) {
+            circuitImage.classList.add('fixed', 'inset-0', 'z-50', 'w-screen', 'h-screen', 'object-contain', 'p-8', 'bg-black/90');
+            fullscreenToggle.innerHTML = '<i data-feather="minimize-2"></i> Exit Fullscreen';
+            fullscreenToggle.style.zIndex = '60';
+            fullscreenToggle.style.position = 'fixed';
+            fullscreenToggle.style.bottom = '2rem';
+            fullscreenToggle.style.right = '2rem';
+        } else {
+            circuitImage.classList.remove('fixed', 'inset-0', 'z-50', 'w-screen', 'h-screen', 'object-contain', 'p-8', 'bg-black/90');
+            fullscreenToggle.innerHTML = '<i data-feather="maximize-2"></i> View Fullscreen';
+            fullscreenToggle.style.zIndex = '';
+            fullscreenToggle.style.position = '';
+            fullscreenToggle.style.bottom = '';
+            fullscreenToggle.style.right = '';
+}
+        feather.replace();
+    });
 
     // Toggle documentation sections
-    document.querySelectorAll('.intro-toggle').forEach(button => {
-        button.addEventListener('click', () => {
+    document.querySelectorAll('.intro-toggle, .hardware-toggle, .circuit-toggle').forEach(button => {
+button.addEventListener('click', () => {
             const content = button.nextElementSibling;
             const icon = button.querySelector('i');
             
