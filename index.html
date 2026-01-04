@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="min-h-screen overflow-hidden">
+<body class="min-h-screen">
 <!-- Background Blobs -->
     <div class="blob-container fixed inset-0 -z-10 overflow-hidden">
         <div class="blob cyan-blob absolute rounded-full"></div>
@@ -25,17 +25,34 @@
         <i id="theme-icon" data-feather="sun" class="text-black"></i>
 </button>
 </div>
-
         <!-- Coming Soon Text -->
         <h1 class="text-6xl md:text-8xl font-bold text-center mb-8 coming-soon">
 Coming Soon...
         </h1>
-        <p class="text-xl md:text-2xl text-center max-w-2xl">
+        <p class="text-xl md:text-2xl text-center max-w-2xl mb-8">
 We're working on something amazing. Stay tuned for our neon-filled launch!
         </p>
-    </div>
+        <img src="https://huggingface.co/spaces/kako20/neon-glow-blobscape-explorer/resolve/main/images/5956510879937399757_1191.jpg" 
+             alt="Neon Glow Preview" 
+             class="w-full max-w-4xl rounded-lg shadow-2xl mb-16">
 
-    <script src="script.js"></script>
+        <!-- Additional Content -->
+        <div class="w-full max-w-4xl space-y-12 mb-16">
+            <div class="bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold mb-4">What to Expect</h2>
+                <p class="text-lg">Our upcoming platform will feature cutting-edge neon design elements, interactive experiences, and a vibrant community.</p>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-lg p-8 rounded-xl shadow-lg">
+                <h2 class="text-3xl font-bold mb-4">Join Our Waitlist</h2>
+                <form class="space-y-4">
+                    <input type="email" placeholder="Your Email" class="w-full p-3 rounded-lg bg-white/20 border border-white/30 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg font-medium hover:opacity-90 transition-opacity">Notify Me</button>
+                </form>
+            </div>
+        </div>
+</div>
+<script src="script.js"></script>
     <script>feather.replace();</script>
 <script src="https://huggingface.co/deepsite/deepsite-badge.js"></script>
 </body>
