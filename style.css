@@ -113,9 +113,21 @@ body {
     animation-delay: -3s;
 }
 .coming-soon {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 15px rgba(34, 211, 238, 0.7);
+}
+.intro-content {
+    transition: max-height 0.5s ease-out, opacity 0.5s ease;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: pre-line;
 }
 
+.intro-content:not(.hidden) {
+    opacity: 1;
+    max-height: 2000px;
+    white-space: pre-line;
+}
 img {
     animation: float 3s ease-in-out infinite;
 }

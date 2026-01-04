@@ -43,7 +43,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
     window.addEventListener('resize', initBlobs);
     initBlobs();
+
+    // Toggle documentation sections
+    document.querySelectorAll('.intro-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            content.classList.toggle('hidden');
+            icon.style.transform = content.classList.contains('hidden') ? 
+                'rotate(0deg)' : 'rotate(180deg)';
+            
+            // Smooth height transition
+            if (content.classList.contains('hidden')) {
+                content.style.maxHeight = '0';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+        });
+    });
 });
