@@ -1,0 +1,133 @@
+
+:root {
+    --bg-color: #0f172a;
+    --text-color: #f8fafc;
+    --cyan-blob: rgba(34, 211, 238, 0.8);
+    --purple-blob: rgba(168, 85, 247, 0.8);
+    --pink-blob: rgba(236, 72, 153, 0.8);
+}
+.light-mode {
+    --bg-color: #f8fafc;
+    --text-color: #444444;
+    --cyan-blob: rgba(34, 211, 238, 0.8);
+    --purple-blob: rgba(168, 85, 247, 0.8);
+    --pink-blob: rgba(236, 72, 153, 0.8);
+    transition: all 0.5s ease;
+}
+
+#theme-toggle {
+    background-color: white !important;
+}
+
+#theme-icon {
+    color: black !important;
+}
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.5s ease;
+}
+@keyframes triangle-path {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    33% {
+        transform: translate(25vw, -15vh) rotate(30deg);
+    }
+    66% {
+        transform: translate(-15vw, 20vh) rotate(-20deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+@keyframes figure-eight {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    20% {
+        transform: translate(20vw, 10vh) rotate(15deg);
+    }
+    40% {
+        transform: translate(5vw, -20vh) rotate(-10deg);
+    }
+    60% {
+        transform: translate(-20vw, 10vh) rotate(25deg);
+    }
+    80% {
+        transform: translate(-5vw, -20vh) rotate(-15deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+}
+
+@keyframes diagonal-sweep {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(-30vw, 30vh) rotate(360deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(720deg);
+    }
+}
+
+.blob {
+    width: 500px;
+    height: 500px;
+    filter: blur(100px);
+    animation-duration: 8s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    position: absolute;
+    z-index: -1;
+    transition: all 0.5s ease;
+}
+.cyan-blob {
+    background: var(--cyan-blob);
+    top: 20%;
+    left: 20%;
+    animation-name: triangle-path;
+    animation-duration: 10s;
+    animation-delay: -2s;
+}
+
+.purple-blob {
+    background: var(--purple-blob);
+    bottom: 20%;
+    right: 20%;
+    animation-name: figure-eight;
+    animation-duration: 12s;
+    animation-delay: -5s;
+}
+
+.pink-blob {
+    background: var(--pink-blob);
+    top: 40%;
+    left: 40%;
+    animation-name: diagonal-sweep;
+    animation-duration: 8s;
+    animation-delay: -3s;
+}
+.coming-soon {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.light-mode .coming-soon {
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .blob {
+        width: 300px;
+        height: 300px;
+        filter: blur(80px);
+        animation-duration: 6s !important;
+    }
+.coming-soon {
+        font-size: 3.5rem;
+    }
+}

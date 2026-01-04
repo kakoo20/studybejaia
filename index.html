@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Glow | Coming Soon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="min-h-screen overflow-hidden">
+<!-- Background Blobs -->
+    <div class="blob-container fixed inset-0 -z-10 overflow-hidden">
+        <div class="blob cyan-blob absolute rounded-full"></div>
+        <div class="blob purple-blob absolute rounded-full"></div>
+        <div class="blob pink-blob absolute rounded-full"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 flex flex-col min-h-screen justify-center items-center">
+        <!-- Theme Toggle -->
+        <div class="absolute top-6 left-6">
+            <button id="theme-toggle" class="p-2 rounded-full shadow-lg bg-white hover:bg-gray-100 transition-colors">
+        <i id="theme-icon" data-feather="sun" class="text-black"></i>
+</button>
+</div>
+
+        <!-- Coming Soon Text -->
+        <h1 class="text-6xl md:text-8xl font-bold text-center mb-8 coming-soon">
+Coming Soon...
+        </h1>
+        <p class="text-xl md:text-2xl text-center max-w-2xl">
+We're working on something amazing. Stay tuned for our neon-filled launch!
+        </p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>feather.replace();</script>
+<script src="https://huggingface.co/deepsite/deepsite-badge.js"></script>
+</body>
+</html>
