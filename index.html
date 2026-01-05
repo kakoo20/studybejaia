@@ -86,10 +86,12 @@ Présentation du projet :
                         Logiciels utilisés
                     </h3>
                     <ul class="list-disc pl-6 space-y-2 mt-2">
-                        <li><span class="font-medium">Arduino IDE</span> : Environnement utilisé pour écrire et téléverser le code de contrôle du système.</li>
+                        <li><span class="font-medium">Arduino IDE</span> : Environnement utilisé pour <span class="text-green-300 font-medium">Écrire et téléverser</span> le code de contrôle du système.</li>
                         <li><span class="font-medium">Processing 4</span> : Logiciel utilisé pour créer l'<span class="text-green-300 font-medium">Interface Graphique</span> et visualiser les ondes du radar en temps réel.</li>
-                        <li><span class="font-medium">Visual Studio Code</span> : Éditeur utilisé pour le développement et la gestion du site web du projet.</li>
-                         <li><span class="font-medium">Tinkercad</span> : Logiciel utilisé pour dessiner le schéma du circuit électronique.</li>
+                         <li><span class="font-medium">Tinkercad</span> : Site Web utilisé pour dessiner le <span class="text-green-300 font-medium">Schéma de circuit électrique</span> </li>
+                         <li><span class="font-medium">Github</span> : <span class="text-green-300 font-medium">Gestion de version & Hébergement</span> du code de site web du projet</li>
+                         <li><span class="font-medium">Visual Studio Code</span> : Éditeur utilisé pour le <span class="text-green-300 font-medium">Développement</span> du site web du projet.</li>
+                         <li><span class="font-medium">Vercel</span> : <span class="text-green-300 font-medium">Hébergement</span> du site web, <span class="text-green-300 font-medium">déploiement continu</span> et création d'un <span class="text-green-300 font-medium">sous-domaine</span>.</li>
                     </ul>
 
                     <h3 class="text-xl font-semibold text-green-300 mt-6">Spécifications techniques :</h3>
@@ -181,7 +183,7 @@ Présentation du projet :
         </svg>
     </button>
     
-    <div class="hidden p-6 bg-black border-x-2 border-b-2 border-purple-900 rounded-b-lg space-y-8">
+    <div class="hidden p-6 bg-black/50 border-x-2 border-b-2 border-purple-900 rounded-b-lg space-y-8">
         
         <div class="space-y-3">
             <div class="flex items-center justify-between">
@@ -412,14 +414,237 @@ function copyToClipboard(id) {
     });
 }
 </script>
+           <div class="mt-8 mb-4">
+    <button class="w-full flex items-center justify-between px-8 py-6 bg-black/50 border-2 border-cyan-500 rounded-lg text-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]" 
+            onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span class="text-2xl font-bold">Logique de Fonctionnement</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+    
+    <div class="hidden p-8 bg-black/50 border-x-2 border-b-2 border-cyan-900 rounded-b-lg">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+                <h4 class="text-cyan-400 font-bold tracking-widest uppercase ml-4 ">L'Algorithme en 4 étapes :</h4>
+                <ul class="space-y-4 text-gray-300">
+                    <li class="flex gap-3">
+                        <span class="flex-none w-6 h-6 rounded-full bg-cyan-900 text-cyan-400 flex items-center justify-center text-xs font-bold border border-cyan-500">1</span>
+                        <span>Émission : Le capteur HC-SR04 envoie une salve d'ultrasons (40 kHz) par le TRIG.</span>
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="flex-none w-6 h-6 rounded-full bg-cyan-900 text-cyan-400 flex items-center justify-center text-xs font-bold border border-cyan-500">2</span>
+                        <span>Réception : Le signal rebondit sur l'obstacle et revient au capteur par ECHO.</span>
+                    </li>
+                    <li class="flex gap-3">
+          <span class="flex-none w-6 h-6 rounded-full bg-cyan-900 text-cyan-400 flex items-center justify-center text-xs font-bold border border-cyan-500">3</span>
+                        <span>Traitement : Arduino calcule le temps de vol (t) et convertit en distance (d = v*t / 2).</span>
+                    </li>
+                    <li class="flex gap-3">
+    <span class="flex-none w-6 h-6 rounded-full bg-cyan-900 text-cyan-400 flex items-center justify-center text-xs font-bold border border-cyan-500">4</span>
+    <span>
+        <class=>Alerte :
+        Si <strong class="text-white">d < 30 cm</strong>, le buzzer s'active et l'interface Processing affiche l'alerte en rouge. 
+        Simultanément, le servomoteur s'immobilise, les <span class="text-red-500 font-semibold">LED rouges s'allument</span> 
+        et les <span class="text-green-500 font-semibold">LED vertes s'éteignent</span>.
+    </span>
+</li>
+                </ul>
+            </div>
+
+            
+            </div>
+           <div class=" mt-8 bg-cyan-950/30 p-5 rounded-lg border border-cyan-500/20">
+    <h4 class="text-cyan-400 font-bold mb-2">Note Technique :</h4>
+    <p class="text-sm text-gray-400 leading-relaxed">
+        La vitesse du son utilisée pour les calculs est de <span class="text-white">0,034 cm/μs</span> pour obtenir des résultats en centimètres. 
+        Le servomoteur effectue un balayage sur une plage de <span class="text-white">0° à 180°</span> avec un pas de <span class="text-white">2° à 4°</span>, assurant une couverture radar optimale sans zones d'ombre.
+
+    </p>
+    <div class="mt-6 pt-4 border-t border-cyan-500/20">
+        <p class="text-sm text-cyan-300 italic">
+            <span class="font-bold">Sécurité logicielle :</span> 
+            Le système est programmé pour rester en état d'alerte tant que l'obstacle est présent. Le balayage et le fonctionnement normal ne reprennent automatiquement que lorsque l'objet détecté est retiré de la zone critique.
+        </p>
+    </div>
+</div>
+        </div>
+        <div class="mt-8 mb-4">
+    <button class="w-full flex items-center justify-between px-8 py-6 bg-black/50 border-2 border-amber-500 rounded-lg text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all hover:shadow-[0_0_25px_rgba(245,158,11,0.5)]" 
+            onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span class="text-2xl font-bold ml-4">Défis & Solutions</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+    
+    <div class="hidden p-8 bg-black/50 border-x-2 border-b-2 border-amber-900 rounded-b-lg">
+        <div class="space-y-8">
+            <div class="border-l-4 border-amber-500 pl-6">
+                <h4 class="text-amber-400 font-bold uppercase tracking-widest mb-2">Défi : Gestion de la Rotation Continue</h4>
+                <p class="text-gray-300 leading-relaxed mb-4">
+                    Le servomoteur utilisé est un <span class="text-white font-mono">MG-90S 360°</span>. Contrairement à un servo classique, il ne permet pas de fixer un angle précis. La commande <code class="text-amber-200">write(angle)</code> définit ici la vitesse et le sens de rotation (90 = arrêt, 0/180 = vitesse max).
+                </p>
+                <p class="text-gray-400 text-sm italic mb-6">
+                    <strong class="text-amber-500">Solution :</strong> J'ai implémenté une logique basée sur le <span class="text-white">contrôle temporel</span>. En calibrant précisément la durée d'activation et la vitesse, j'ai pu simuler un balayage radar régulier malgré l'absence de retour de position.
+                </p>
+
+                <div class="relative group">
+                    <div class="absolute -top-3 left-4 bg-amber-600 text-black text-[10px] font-bold px-2 py-0.5 rounded uppercase">Code de calibration</div>
+                    <pre class="bg-black p-6 rounded-lg border border-amber-500/30 overflow-x-auto"><code id="speedCode" class="text-amber-200 text-sm">#include <Servo.h>
+
+Servo myServo;
+const int PIN_SERVO = 9;
+const int SPEED_CCW = 100;  
+const int SPEED_CW  = 83;   
+const int STOP_VAL  = 90;   
+const int TIME_TURN = 2100; 
+const int TIME_WAIT = 1000; 
+
+void setup() {
+  myServo.attach(PIN_SERVO);
+  Serial.begin(9600);
+  
+  myServo.write(STOP_VAL); 
+  delay(2000); 
+  Serial.println("System Ready. Starting Loop...");
+}
+
+void loop() {
+  
+  Serial.println("Moving CCW...");
+  myServo.write(SPEED_CCW);
+  delay(TIME_TURN);
+  
+  
+  myServo.write(STOP_VAL);
+  delay(TIME_WAIT);
+
+  
+  Serial.println("Moving CW...");
+  myServo.write(SPEED_CW);
+  delay(TIME_TURN);
+  
+  
+  myServo.write(STOP_VAL);
+  delay(TIME_WAIT);
+}
+</code></pre>
+                    
+                    <button onclick="copyCode('speedCode')" class="absolute top-4 right-4 bg-amber-500/20 hover:bg-amber-500 text-amber-500 hover:text-black p-2 rounded transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
+    </div>
+</div>
+
+<script>
+function copyCode(id) {
+    const code = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(code);
+    alert("Code copié !");
+}
+</script>
+    </div>
+    
+</div>
+
+        </div>
+        <div class="mt-8 mb-4 w-full">
+    <button class="w-full flex items-center justify-between px-8 py-6 bg-black/50 border-2 border-indigo-500 rounded-lg text-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.3)] transition-all hover:shadow-[0_0_25px_rgba(99,102,241,0.5)]" 
+            onclick="this.nextElementSibling.classList.toggle('hidden')">
+        <span class="text-2xl font-bold ml-4">Conclusion & Perspectives</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+    </button>
+    
+    <div class="hidden p-8 bg-gray-950 border-x-2 border-b-2 border-indigo-900 rounded-b-lg w-full">
+        <div class="w-full">
+            <p class="text-gray-300 leading-relaxed mb-8 text-lg">
+                La réalisation de ce radar à ultrasons a été une expérience enrichissante, me permettant de lier la <span class="text-indigo-400">programmation logicielle</span> à la <span class="text-indigo-400">réalité physique des composants</span>. Malgré les contraintes matérielles, comme l'adaptation du servomoteur MG-90S, j'ai pu livrer un système fonctionnel et interactif.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 w-full">
+                <div class="bg-indigo-950/20 p-6 rounded-lg border border-indigo-500/20">
+                    <h4 class="text-indigo-400 font-bold mb-3 uppercase text-sm">Compétences acquises :</h4>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li>• Capteurs : Acquisition de données de distance par ultrasons et conversion de signaux temporels en données physiques (cm).</li>
+                        <li>• Systèmes Embarqués : Architecture et programmation de microcontrôleurs (Atmel AVR/Arduino).</li>
+                        <li>• Gestion des signaux PWM et temporels.</li>
+                        <li>• Développement IHM : Création d'une interface graphique bidimensionnelle pour la visualisation de données radar en temps réel via Processing.</li>
+                    </ul>
+                </div>
+                <div class="bg-indigo-950/20 p-6 rounded-lg border border-indigo-500/20">
+                    <h4 class="text-indigo-400 font-bold mb-3 uppercase text-sm">Évolutions futures :</h4>
+                    <ul class="text-sm text-gray-400 space-y-2">
+                        <li>• Remplacement de l'ultrason par un capteur TF-Luna (LIDAR).</li>
+                        <li>• Ajout d'une communication sans fil (Bluetooth/Wi-Fi).</li>
+                        <li>• Optimisation de la consommation énergétique.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-6 bg-gradient-to-r from-indigo-900/40 to-transparent border-l-4 border-indigo-500 rounded-r-lg w-full">
+                <p class="text-gray-200 italic">
+                    "Ce projet confirme mon désir d'intégrer la <span class="font-bold text-white">Licence EEA de l'Université Côte d'Azur</span>. Je suis impatient d'approfondir mes connaissances en systèmes embarqués et en automatique au sein de vos laboratoires."
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 
     </pre>
             </div>
         </div>
     </div>
 </div>
+<footer class="mt-20 mb-12 pb-10 border-t border-gray-800 pt-12 text-center">
+    <div class="max-w-2xl mx-auto px-6">
+        <h3 class="text-white text-xl font-semibold mb-4">Merci de votre attention</h3>
+        <p class="text-gray-400 leading-relaxed mb-8">
+            Je reste à votre entière disposition pour toute information complémentaire ou pour répondre à vos questions concernant les détails techniques de ce projet lors d'un éventuel entretien.
+        </p>
+
+        <div class="inline-flex flex-col sm:flex-row items-center gap-4 bg-gray-900/50 border border-indigo-500/30 p-4 rounded-2xl">
+            <div class="flex items-center gap-3 px-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                <span id="userEmail" class="text-indigo-100 font-mono">abdelhakim.brahmi@tech.univ-bejaia.dz</span>
+            </div>
+            
+            <button onclick="copyEmail()" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-xl transition-all font-bold text-sm uppercase tracking-widest shadow-lg shadow-indigo-500/20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                Copier l'email
+            </button>
+        </div>
+    </div>
+</footer>
+
+<script>
+function copyEmail() {
+    const email = document.getElementById('userEmail').innerText;
+    navigator.clipboard.writeText(email);
+    
+    // Feedback visuel
+    const btn = event.currentTarget;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = "Copié !";
+    btn.classList.replace('bg-indigo-600', 'bg-green-600');
+    
+    setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.classList.replace('bg-green-600', 'bg-indigo-600');
+    }, 2000);
+}
+</script>
             </div>
         </div>
     </div>
