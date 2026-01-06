@@ -6,43 +6,47 @@
     <title>Radar Ultrasons | Projet EEA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="min-h-screen">
-<!-- Background Blobs -->
     <div class="blob-container fixed inset-0 -z-10 overflow-hidden">
         <div class="blob cyan-blob absolute rounded-full"></div>
         <div class="blob purple-blob absolute rounded-full"></div>
         <div class="blob pink-blob absolute rounded-full"></div>
     </div>
 
-    <!-- Main Content -->
     <div class="container mx-auto px-4 flex flex-col min-h-screen justify-start items-center pt-32">
-<!-- Theme Toggle -->
         <div class="absolute top-6 left-6">
             <button id="theme-toggle" class="p-2 rounded-full shadow-lg bg-white hover:bg-gray-100 transition-colors">
-        <i id="theme-icon" data-feather="sun" class="text-black"></i>
-</button>
-</div>
-        <!-- Documentation Header -->
+                <i id="theme-icon" data-feather="sun" class="text-black"></i>
+            </button>
+        </div>
+
         <h1 class="text-5xl md:text-7xl font-bold text-center mb-4 coming-soon">
             Système de Radar à Ultrasons à Courte Portée
         </h1>
-<p class="text-xl md:text-2xl text-center max-w-2xl mb-12 text-cyan-400">
+        <p class="text-xl md:text-2xl text-center max-w-2xl mb-12 text-cyan-400">
             Université de Béjaia | Abdelhakim BRAHMI | L2 Automatique
         </p>
-<!-- Documentation Sections -->
-        <div class="w-full max-w-4xl space-y-6">
-            <!-- Introduction Section -->
+
+        <section class="max-w-4xl w-full px-6 mt-4 mb-12"> 
+            <div class="p-6 bg-gray-900/50 border-l-4 border-blue-500 rounded-r-lg backdrop-blur-sm">
+                <p class="text-gray-300 leading-relaxed italic">
+                    Ce site web présente un projet de système de **radar ultrasonique à courte portée**, développé par <span class="text-white font-semibold">Abdelhakim Brahmi</span> de l'Université de Béjaïa. Le contenu détaille les composants du projet, le schéma électrique, le code source, la logique de fonctionnement et les défis rencontrés, constituant ainsi un **portfolio technique**.
+                </p>
+            </div>
+        </section>
+
+        <div class="w-full max-w-4xl space-y-8">
+            
             <div class="rounded-xl overflow-hidden">
                 <button class="intro-toggle w-full flex justify-between items-center p-6 bg-black/50 border border-cyan-500 rounded-t-xl hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300">
                     <h2 class="text-2xl font-bold text-cyan-400">Introduction</h2>
                     <i data-feather="chevron-down" class="text-cyan-400 transition-transform duration-300"></i>
                 </button>
                 <div class="intro-content hidden bg-black/30 p-6 border border-t-0 border-cyan-500/50 rounded-b-xl">
-                    <p class="text-lg leading-relaxed">
-Présentation du projet :
+                    <p class="text-lg leading-relaxed text-gray-300">
+                       Présentation du projet :
                         Le projet "Mini Radar" est un système de détection compact conçu pour repérer et cartographier des objets en temps réel. En utilisant des ondes ultrasonores, le système scanne une zone précise et analyse l'écho pour calculer la distance et la position des obstacles. Ces données sont ensuite affichées sur une interface graphique pour imiter le fonctionnement d'un radar industriel.
 
                         Pourquoi ce projet ? 
@@ -60,16 +64,14 @@ Présentation du projet :
                 </div>
             </div>
 
-            <!-- Hardware Section -->
             <div class="rounded-xl overflow-hidden">
                 <button class="hardware-toggle w-full flex justify-between items-center p-6 bg-black/50 border border-green-500 rounded-t-xl hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300">
                     <h2 class="text-2xl font-bold text-green-400">Matériel & Composants</h2>
                     <i data-feather="chevron-down" class="text-green-400 transition-transform duration-300"></i>
                 </button>
-                <div class="hardware-content hidden bg-black/30 p-6 border border-t-0 border-green-500/50 rounded-b-xl space-y-4">
-                    <h3 class="text-xl font-semibold text-green-300">Liste des composants :</h3>
-                    <ul class="list-disc pl-6 space-y-2">
-                        <li>Arduino Uno (Microcontrôleur)</li>
+                <div class="hardware-content hidden bg-black/30 p-6 border border-t-0 border-green-500/50 rounded-b-xl space-y-4 text-gray-300">
+                    <ul class="list-disc pl-6">
+                       <li>Arduino Uno (Microcontrôleur)</li>
                         <li>Capteur Ultrason HC-SR04 (Détection)</li>
                         <li>Servomoteur MG90s (Rotation 360°)</li>
                         <li>Fils de connexion male-male & male-femelle </li>
@@ -114,6 +116,7 @@ Présentation du projet :
                     </table>
                 </div>
             </div>
+
             <!-- Circuit Diagram Section -->
             <div class="rounded-xl overflow-hidden mt-8">
             <button class="circuit-toggle w-full flex justify-between items-center p-6 bg-black/50 border border-yellow-500 rounded-t-xl hover:shadow-lg hover:shadow-yellow-500/20 transition-all duration-300">
@@ -203,9 +206,9 @@ const int echoPin = 6;
 const int buzzerPin = 8;
 const int red1 = 12, red2 = 11, green1 = 5, green2 = 4;
 
-// NEW TIMING LOGIC
-unsigned long activeElapsed = 0;   // This only grows when moving
-unsigned long lastUpdate = 0;      // Tracks the last time the loop ran
+
+unsigned long activeElapsed = 0;  
+unsigned long lastUpdate = 0;  
 const int sweepDuration = 2100; 
 const int edgePause = 200; 
 
@@ -221,12 +224,12 @@ void setup() {
   pinMode(green1, OUTPUT); pinMode(green2, OUTPUT);
   
   Serial.begin(9600);
-  lastUpdate = millis(); // Initialize the tracker
+  lastUpdate = millis(); 
 }
 
 void loop() {
   unsigned long currentTime = millis();
-  unsigned long deltaTime = currentTime - lastUpdate; // How much time passed since last loop
+  unsigned long deltaTime = currentTime - lastUpdate;
   lastUpdate = currentTime;
 
   long duration;
@@ -237,29 +240,25 @@ void loop() {
   duration = pulseIn(echoPin, HIGH);
   distance = duration * 0.034 / 2;
 
-  // 1. OBJECT DETECTED (Alarm Mode)
   if (distance > 0 && distance < 0) {
     myServo.write(90); 
     digitalWrite(green1, LOW); digitalWrite(green2, LOW);
     digitalWrite(red1, HIGH); digitalWrite(red2, HIGH);
     tone(buzzerPin, 1000);
     
-    // We DO NOT add deltaTime to activeElapsed here. 
-    // The "clock" stays frozen.
     sendData(virtualAngle, distance);
   } 
-  // 2. SCANNING MODE (Moving)
   else {
     noTone(buzzerPin);
     digitalWrite(red1, LOW); digitalWrite(red2, LOW);
     digitalWrite(green1, HIGH); digitalWrite(green2, HIGH);
 
-    activeElapsed += deltaTime; // The clock only moves when no object is detected
+    activeElapsed += deltaTime; 
 
     if (!isPaused) {
       if (activeElapsed >= sweepDuration) {
         isPaused = true;
-        activeElapsed = 0; // Reset for the pause phase
+        activeElapsed = 0;
       } else {
         if (movingCCW) {
           myServo.write(100);
@@ -270,12 +269,11 @@ void loop() {
         }
       }
     } else {
-      // Logic for the 200ms Edge Pause
       myServo.write(90); 
       if (activeElapsed >= edgePause) {
         isPaused = false;
         movingCCW = !movingCCW; 
-        activeElapsed = 0; // Reset for the next sweep trip
+        activeElapsed = 0; 
       }
     }
     sendData(virtualAngle, distance);
@@ -314,21 +312,20 @@ float pixDist;
 void setup() {
   size(1200, 700); 
   smooth();
-  // IMPORTANT: Ensure COM port matches your Arduino IDE
   myPort = new Serial(this, "COM4", 9600); 
   myPort.bufferUntil('.'); 
   background(0);
 }
 
 void draw() {
-  fill(0, 15); // Trail effect
+  fill(0, 15);
   noStroke();
   rect(0, 0, width, height);
   
   drawRadar();
   drawLine();
   drawObject();
-  drawText(); // Added labels
+  drawText(); 
 }
 
 void serialEvent(Serial myPort) {
@@ -340,8 +337,6 @@ void serialEvent(Serial myPort) {
       int rawAngle = int(list[0]);
       distance = int(list[1]);
       
-      // FLIP LOGIC: 
-      // If 0 shows as 180 and 180 shows as 0, this line fixes it:
       angle = 180 - rawAngle; 
     }
   }
@@ -354,7 +349,7 @@ void drawRadar() {
   strokeWeight(2);
   stroke(98, 245, 31);
   
-  // Distance Circles
+  
   arc(0, 0, (width-width/6), (width-width/6), PI, TWO_PI);
   arc(0, 0, (width-width/3), (width-width/3), PI, TWO_PI);
   arc(0, 0, (width-width/1.5), (width-width/1.5), PI, TWO_PI);
@@ -393,8 +388,8 @@ void drawObject() {
   translate(width/2, height - height/10);
   strokeWeight(10);
   stroke(255, 10, 10); 
-  pixDist = distance * ((height-height/10)*0.035); // Adjusted scale
-  
+  pixDist = distance * ((height-height/10)*0.035); 
+
   if (distance < 25 && distance > 0) {
     line(pixDist*cos(radians(angle+180)), pixDist*sin(radians(angle+180)), 
          (height-height/10)*cos(radians(angle+180)), (height-height/10)*sin(radians(angle+180)));
@@ -414,7 +409,8 @@ function copyToClipboard(id) {
     });
 }
 </script>
-           <div class="mt-8 mb-4">
+
+<div class="mt-8 mb-4">
     <button class="w-full flex items-center justify-between px-8 py-6 bg-black/50 border-2 border-cyan-500 rounded-lg text-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.4)] transition-all hover:shadow-[0_0_25px_rgba(6,182,212,0.6)]" 
             onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span class="text-2xl font-bold">Logique de Fonctionnement</span>
@@ -469,8 +465,9 @@ function copyToClipboard(id) {
     </div>
 </div>
         </div>
+
         <div class="mt-8 mb-4">
-    <button class="w-full flex items-center justify-between px-8 py-6 bg-black/50 border-2 border-amber-500 rounded-lg text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all hover:shadow-[0_0_25px_rgba(245,158,11,0.5)]" 
+    <button class="w-full flex items-center justify-between px-8 py-6 bg-black/50 border-2 border-amber-500 rounded-lg text-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all hover:shadow-[0_0_25px_rgba(245,158,11,0.3)]" 
             onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span class="text-2xl font-bold ml-4">Défis & Solutions</span>
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -552,9 +549,9 @@ function copyCode(id) {
     </div>
     
 </div>
+ </div>
 
-        </div>
-        <div class="mt-7 mb-15 ">
+             <div class="mt-7 mb-15 ">
     <button class="w-full flex items-center justify-between px-8 py-6 bg-black/50 border-2 border-indigo-500 rounded-lg text-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.3)] transition-all hover:shadow-[0_0_25px_rgba(99,102,241,0.5)]"
             onclick="this.nextElementSibling.classList.toggle('hidden')">
         <span class="text-2xl font-bold ">Conclusion & Perspectives</span>
@@ -574,7 +571,7 @@ function copyCode(id) {
                     <h4 class="text-indigo-400 font-bold mb-3 uppercase text-sm">Compétences acquises :</h4>
                     <ul class="text-sm text-gray-400 space-y-2">
                         <li>• Capteurs : Acquisition de données de distance par ultrasons et conversion de signaux temporels en données physiques (cm).</li>
-                        <li>• Systèmes Embarqués : Architecture et programmation de microcontrôleurs (Atmel AVR/Arduino).</li>
+                        <li>• Systèmes Embarqués : Architecture et programmation de microcontrôleurs (Arduino).</li>
                         <li>• Gestion des signaux PWM et temporels.</li>
                         <li>• Développement IHM : Création d'une interface graphique bidimensionnelle pour la visualisation de données radar en temps réel via Processing.</li>
                     </ul>
@@ -602,62 +599,44 @@ function copyCode(id) {
             </div>
         </div>
     </div>
-</div>
-<footer class="mt-20 mb-12 pb-10 border-t border-gray-800 pt-12 text-center">
-    <div class="max-w-2xl mx-auto px-6">
-        <h3 class="text-white text-xl font-semibold mb-4">Merci de votre attention</h3>
-        <p class="text-bleu-500 leading-relaxed mb-8">
-            Je reste à votre entière disposition pour toute information complémentaire ou pour répondre à vos questions concernant les détails techniques de ce projet lors d'un éventuel entretien.
-        </p>
 
-        <div class="inline-flex flex-col sm:flex-row items-center gap-4 bg-gray-900/50 border border-indigo-500/30 p-4 rounded-2xl">
-            <div class="flex items-center gap-3 px-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                <span id="userEmail" class="text-indigo-100 font-mono">abdelhakim.brahmi@tech.univ-bejaia.dz</span>
-            </div>
-            
-            <button onclick="copyEmail()" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-xl transition-all font-bold text-sm uppercase tracking-widest shadow-lg shadow-indigo-500/20">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                Copier l'email
-            </button>
-        </div>
-    </div>
-</footer>
+        </div> <footer class="mt-20 mb-12 pb-10 border-t border-gray-800 pt-12 text-center w-full">
+            <div class="max-w-4xl mx-auto px-6">
+                <h3 class="text-white text-xl font-semibold mb-4 text-center">Merci de votre attention</h3>
+                <p class="text-gray-400 mb-8 text-center">
+                    Je reste à votre entière disposition pour toute information complémentaire ou pour répondre à vos questions concernant les détails techniques de ce projet lors d'un éventuel entretien.
+                </p>
 
-<script>
-function copyEmail() {
-    const email = document.getElementById('userEmail').innerText;
-    navigator.clipboard.writeText(email);
-    
-    // Feedback visuel
-    const btn = event.currentTarget;
-    const originalText = btn.innerHTML;
-    btn.innerHTML = "Copié !";
-    btn.classList.replace('bg-indigo-600', 'bg-green-600');
-    
-    setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.classList.replace('bg-green-600', 'bg-indigo-600');
-    }, 2000);
-}
-</script>
+                <div class="inline-flex flex-col sm:flex-row items-center gap-4 bg-gray-900/50 border border-indigo-500/30 p-4 rounded-2xl mx-auto">
+                    <div class="flex items-center gap-3 px-4">
+                        <i data-feather="mail" class="text-indigo-400"></i>
+                        <span id="userEmail" class="text-indigo-100 font-mono text-center">abdelhakim.brahmi@tech.univ-bejaia.dz</span>
+                    </div>
+                    <button onclick="copyEmail()" class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2 rounded-xl transition-all font-bold text-sm uppercase tracking-widest shadow-lg shadow-indigo-500/20">
+                        Copier l'email
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<script src="script.js"></script>
-    <script>feather.replace();</script>
-    <script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-<script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
+        </footer>
+    </div> <script>
+        feather.replace();
+
+        // Toggle pour Intro et Hardware (Tes classes originales)
+        document.querySelector('.intro-toggle')?.addEventListener('click', () => {
+            document.querySelector('.intro-content').classList.toggle('hidden');
+        });
+        document.querySelector('.hardware-toggle')?.addEventListener('click', () => {
+            document.querySelector('.hardware-content').classList.toggle('hidden');
+        });
+
+        function copyEmail() {
+            const email = document.getElementById('userEmail').innerText;
+            navigator.clipboard.writeText(email);
+            alert("Email copié !");
+        }
+    </script>
+
+    <script defer src="/_vercel/insights/script.js"></script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
